@@ -9,4 +9,4 @@ student2=Student("Patrick",30)
 
 print(student1.name)
 print(student1.age)
-print(student1.class_year) 
+print(student2.class_year) 

@@ -9,5 +9,5 @@ def outer():
 
     inner()
 
-outer()  # Output: 10
+outer() # Output: 10
 print(x)  # Output: 50 (global x)

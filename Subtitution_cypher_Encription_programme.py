@@ -1,20 +1,29 @@
 import random
 import string
-chars=string.punctuation+string.digits + string.ascii_letters
+
+# Define the character set
+chars = string.punctuation + string.digits + string.ascii_letters
 chars = list(chars)
-key=chars.copy()
+
+# Create a shuffled key
+key = chars.copy()
 random.shuffle(key)
 
-print(f"chars:{chars}")
+# Display both character sets
+print(f"chars: {chars}")
 print(f"key: {key}")
-#ENCRYPT
-plain_text=input("Enter a message to encypt:")
-cipher_text=""
 
+# ENCRYPT
+plain_text = input("Enter a message to encrypt: ")
+cipher_text = ""
+
+# Encrypt each letter
 for letter in plain_text:
-    index= key.index(letter)
-    cipher_text+=chars[index]
+    if letter in chars:
+        index = chars.index(letter)  # Find the index in original chars
+        cipher_text += key[index]  # Use the same index to get the letter from the key
+    else:
+        cipher_text += letter  # If the letter isn't in chars, keep it unchanged
 
-
-print(f"encrypted message:{cipher_text}")
-print(f"original message;{plain_text}")
+print(f"Encrypted message: {cipher_text}")
+print(f"Original message: {plain_text}")
