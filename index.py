@@ -1,6 +1,7 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QLabel, QVBoxLayout, QWidget
 from PyQt5.QtCore import Qt, QTimer, QTime
+from PyQt5.QtGui import Qp1xmap
 
 class DigitalClock(QWidget):
     def __init__(self):
