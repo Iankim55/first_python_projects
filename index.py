@@ -1,29 +1,49 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow,QLabel
-from PyQt5.QtGui import QFont
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QPixmap
-from PyQt5.QtGui import QIcon
-class MainWindow(QMainWindow):
+from PyQt5.QtWidgets import QApplication, QLabel, QVBoxLayout, QWidget
+from PyQt5.QtCore import Qt, QTimer, QTime
+
+class DigitalClock(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("My first Cool Gui")
-        self.setGeometry(700,300,500,500)
-        self.setWindowIcon(QIcon("pythonProject1/tacos_tray_400x267.png"))
-        label=QLabel("Hello User",self)
-        label.setFont(QFont("Arial",40))
-        label.setGeometry(0,0,500,100)
-        label.setStyleSheet("color:red;"
-                            "background-color:black;")
-        pixmap=QPixmap("pythonProject1/tacos_tray_400x267.png")
-        label.setPixmap(pixmap)
-        
-        label.setAlignment(Qt.AlignBottom | Qt.AlignHCenter)
-def main():
-    app = QApplication(sys.argv)
-    window = MainWindow()
-    window.show()
-    sys.exit(app.exec_())  # Use `app.exec_()` to start the event loop
+        self.initUI()
 
-if __name__ == '__main__':
-    main()
+    def initUI(self):
+        # Create a QLabel to display the time
+        self.time_label = QLabel(self)
+        self.time_label.setAlignment(Qt.AlignCenter)
+        self.time_label.setStyleSheet("""
+            font-size: 64px;
+            font-family: 'Times New Roman';
+            color: green;
+        """)
+
+        # Set the window background color to black
+        self.setStyleSheet("background-color: black;")
+
+        # Create a layout and add the QLabel
+        vbox = QVBoxLayout()
+        vbox.addWidget(self.time_label)
+        self.setLayout(vbox)
+
+        # Set up the timer to update time every second
+        self.timer = QTimer(self)
+        self.timer.timeout.connect(self.update_time)
+        self.timer.start(1000)  # Update every second
+
+        # Set initial time
+        self.update_time()
+
+        # Set window properties
+        self.setWindowTitle("Digital Clock")
+        self.setGeometry(600, 400, 300, 100)
+
+    def update_time(self):
+        # Get the current time and update the label
+        current_time = QTime.currentTime().toString("hh:mm:ss")
+        self.time_label.setText(current_time)
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    clock = DigitalClock()
+    clock.show()
+    sys.exit(app.exec_())
